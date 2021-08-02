@@ -29,9 +29,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE users";
         try (Statement statement = util.getConnection().createStatement()) {
-            statement.execute(sql);
+            statement.execute("DROP TABLE users");
             System.out.println("Users table successfully deleted");
         } catch (SQLException ex) {
             System.out.println("ERROR: Users table wasn`t deleted");
@@ -62,11 +61,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        String sql = "SELECT * FROM users";
         ResultSet resultSet;
         List<User> usersList = new ArrayList<>();
         try (Statement statement = util.getConnection().createStatement()) {
-            resultSet = statement.executeQuery(sql);
+            resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
@@ -86,9 +84,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        String sql = "TRUNCATE TABLE users";
         try (Statement statement = util.getConnection().createStatement()) {
-            statement.execute(sql);
+            statement.execute("TRUNCATE TABLE users");
             System.out.println("Users table cleaned successfully");
         } catch (SQLException ex) {
             System.out.println("ERROR users table wasn`t cleaned");
