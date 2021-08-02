@@ -16,11 +16,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS `users` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                "`name` VARCHAR(45) NULL, `lastName` VARCHAR(45) NULL, " +
-                "`age` INT NULL, PRIMARY KEY (`id`));";
         try (Statement statement = util.getConnection().createStatement()) {
-            statement.execute(sql);
+            statement.execute("CREATE TABLE IF NOT EXISTS `users` (`id` INT NOT NULL AUTO_INCREMENT, " +
+                    "`name` VARCHAR(45) NULL, `lastName` VARCHAR(45) NULL, " +
+                    "`age` INT NULL, PRIMARY KEY (`id`));");
             System.out.println("Users table successfully created");
         } catch (SQLException ex) {
             System.out.println("ERROR: Users table wasn`t created");
@@ -39,9 +38,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO users VALUES (id,'" + name + "', '" + lastName + "', " + age + ");";
         try (Statement statement = util.getConnection().createStatement();) {
-            statement.executeUpdate(sql);
+            statement.executeUpdate("INSERT INTO users VALUES (id,'" + name + "', '"
+                    + lastName + "', " + age + ");");
             System.out.println("User – " + name + " was added to table successfully");
         } catch (SQLException throwables) {
             System.out.println("ERROR: user wasn`t added to table");
@@ -50,9 +49,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE FROM users WHERE id = " + id + ";";
         try (Statement statement = util.getConnection().createStatement()) {
-            statement.execute(sql);
+            statement.execute("DELETE FROM users WHERE id = " + id + ";");
             System.out.println("User with id " + id + " was deleted successfully");
         } catch (SQLException ex) {
             System.out.println("ERROR: user wasn`t deleted");
